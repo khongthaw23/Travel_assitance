@@ -7,19 +7,36 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def check_weather_forecast(city):
-    api_key = os.getenv("OPENWEATHER_API_KEY")
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
-    res = requests.get(url)
-    
-    if res.status_code == 200:
-        data = res.json()
-        desc = data["weather"][0]["description"].capitalize()
-        temp = data["main"]["temp"]
-        return f"{desc}, {temp}°C"
-    return "Weather data not available."
+    try:
+        api_key = os.getenv("OPENWEATHER_API_KEY")
+        if not api_key:
+            return "Missing OpenWeather API key."
 
-def find_flights(origin, destination):
-    return f"Check flights here: https://www.skyscanner.com/transport/flights/{origin.lower()}/{destination.lower()}/"
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+        res = requests.get(url)
+
+        if res.status_code == 200:
+            data = res.json()
+            desc = data["weather"][0]["description"].capitalize()
+            temp = data["main"]["temp"]
+            return f"{desc}, {temp}°C"
+        else:
+            return f"Weather API error {res.status_code}: {res.text}"
+    except Exception as e:
+        return f"Exception occurred: {e}"
+
+
+def find_flights_tool(input_str):
+    """
+    Wrapper function that expects input in the form 'Origin to Destination'.
+    """
+    parts = input_str.lower().split(" to ")
+    if len(parts) != 2:
+        return "Please provide flight query in the format: 'City1 to City2'."
+    
+    origin, destination = parts
+    return find_flights_tool(origin.strip(), destination.strip())
+
 
 def lookup_hotel_availability(city):
     return f"Search hotels in {city}: https://www.booking.com/searchresults.html?ss={city}"

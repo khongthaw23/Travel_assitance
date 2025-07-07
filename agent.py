@@ -8,7 +8,7 @@ from langchain.agents.agent_types import AgentType
 
 from travel_tool import (
     check_weather_forecast,
-    find_flights,
+    find_flights_tool,
     lookup_hotel_availability,
     get_attraction_info
 )
@@ -16,6 +16,7 @@ from travel_tool import (
 # Load API key from .env
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY")
+open_api_key=os.getenv("OPENWEATHER_API_KEY")
 
 # Use Groq's Mistral model
 llm = ChatGroq(
@@ -31,8 +32,8 @@ tools = [
     ),
     Tool(
         name="FindFlights",
-        func=find_flights,
-        description="Find flights between two cities."
+        func=find_flights_tool,
+        description="Find flights between two cities. Input should be in the format: 'Delhi to Mumbai'."
     ),
     Tool(
         name="HotelLookup",
