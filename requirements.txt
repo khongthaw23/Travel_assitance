@@ -1,5 +1,8 @@
 langchain
 streamlit
-langchain-community 
+duckduckgo-search
+wikipedia
 ollama
-
+langchain-groq
+python-dotenv
+langchain_groq
