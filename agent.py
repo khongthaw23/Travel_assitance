@@ -19,7 +19,7 @@ groq_api_key = os.getenv("GROQ_API_KEY")
 open_api_key=os.getenv("OPENWEATHER_API_KEY")
 print("OpenWeather API Key:", os.getenv("OPENWEATHER_API_KEY"))
 
-# Use Groq's Mistral model
+# Use Groq's Gemma model
 llm = ChatGroq(
     api_key=groq_api_key,
     model_name="gemma2-9b-it"  # Options: llama3-8b, gemma-7b-it, mixtral-8x7b
@@ -54,3 +54,4 @@ agent = initialize_agent(
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True
 )
+pip install langchain-groq
