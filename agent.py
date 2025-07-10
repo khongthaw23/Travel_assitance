@@ -17,17 +17,18 @@ from travel_tool import (
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY")
 open_api_key=os.getenv("OPENWEATHER_API_KEY")
+print("OpenWeather API Key:", os.getenv("OPENWEATHER_API_KEY"))
 
 # Use Groq's Mistral model
 llm = ChatGroq(
     api_key=groq_api_key,
-    model_name="llama3-8b-8192"  # Options: llama3-8b, gemma-7b-it, mixtral-8x7b
+    model_name="gemma2-9b-it"  # Options: llama3-8b, gemma-7b-it, mixtral-8x7b
 )
 
 tools = [
     Tool(
         name="WeatherForecast",
-        func=check_weather_forecast,
+        func= check_weather_forecast,
         description="Get the weather forecast for a city."
     ),
     Tool(

@@ -26,16 +26,12 @@ def check_weather_forecast(city):
         return f"Exception occurred: {e}"
 
 
-def find_flights_tool(input_str):
-    """
-    Wrapper function that expects input in the form 'Origin to Destination'.
-    """
-    parts = input_str.lower().split(" to ")
-    if len(parts) != 2:
-        return "Please provide flight query in the format: 'City1 to City2'."
-    
-    origin, destination = parts
-    return find_flights_tool(origin.strip(), destination.strip())
+def find_flights_tool(destination: str):
+    destination_query = destination.replace(" ", "+")  # URL-safe
+    return f"Search flights to {destination}: https://www.google.com/travel/flights?q=flights+to+{destination_query}"
+
+
+
 
 
 def lookup_hotel_availability(city):
